@@ -1,0 +1,52 @@
+.item-details
+  display: flex
+  align-items: center
+  justify-content: center
+  position: relative
+  margin: 40px auto
+  padding: 40px
+  width: 940px
+  border-radius: 7px
+  background-color: #fff
+  div
+    display: flex
+    .favorite-label
+      position: absolute
+      top: 35px
+      left: 35px
+      padding: 7px 10px
+      background-color: rgba(135, 135, 135, 0.4)
+      border-radius: 3px
+      i
+        font-size: 25px
+        color: rgba(135, 135, 135, 0.6)
+        &:hover
+          color: #e63e15
+
+    .item-rating
+      position: absolute
+      top: 30px
+      right: 30px
+      font-size: 22px
+    .item-poster
+      margin-right: 15px
+      width: 350px
+      height: 525px
+    .item-info
+      display: flex
+      flex-direction: column
+      width: 500px
+      .item-title
+        margin: 0
+      table
+        border-collapse: collapse
+        td
+          padding: 10px
+          border-bottom: 1px solid lightgray
+        td:first-child
+          width: 150px
+        td:last-child
+          width: 350px
+        tr:last-child>td
+          border-bottom: none
+

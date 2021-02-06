@@ -1,0 +1,50 @@
+$yellow_color: #ffff00
+$black_color: #212024
+
+.header
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+  margin-bottom: 20px
+  padding: 0 20px 10px
+  border-bottom: 2px solid $yellow_color
+  .logo
+    flex-grow: 1
+    color: $yellow_color
+    font-family: 'Hachi Maru Pop', cursive
+    font-size: 32px
+    font-weight: bold
+  .search-input
+    display: flex
+    input
+      width: 300px
+      height: 36px
+      padding-left: 10px
+      padding-right: 10px
+      border: 1px solid #000
+      border-radius: 5px
+      outline: none
+    button
+      margin-left: 3px
+      height: 35px
+      padding: 5px 15px
+      background-color: $black_color
+      color: $yellow_color
+      font-size: 20px
+      font-weight: bold
+      border: 1px solid $yellow_color
+      border-radius: 5px
+      outline: none
+      cursor: pointer
+      &:active
+        background-color: $yellow_color
+        color: $black_color
+        border-color: $black_color
+  .favorite-link
+    margin-right: 30px
+    color: $black_color
+    font-size: 36px
+    line-height: 36px
+    -webkit-text-stroke: 2px $yellow_color
+    &:hover
+      color: $yellow_color
