@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../header';
 import QueryPanel from '../query-panel';
-import ItemList from '../item-list';
+import FilmList from '../film-list';
 import ItemDetails from '../item-details';
 //import ErrorIndicator from '../error-indicator';
 //import Spinner from '../spinner';
@@ -16,7 +16,7 @@ export default class App extends Component {
                 <main>
                     <div className="main-page">
                         <QueryPanel />
-                        <ItemList />
+                        <FilmList />
                     </div>
                     <ItemDetails />
                 </main>

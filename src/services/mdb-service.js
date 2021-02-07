@@ -15,26 +15,26 @@ export default class MdbService {
         return await res.json();
     }
 
-    getData = (base, queryType, query) => async() => {
+    getData = (base, queryType, page, query) => async() => {
         const url = this._getQueryUrl(base, queryType, page, query);
         const res = await this.getResource(url);
         return res.results.map(this._transformMovie);
     }
 
-    getPopular = async() => {
-        return this.getData(this._apiBasePopular, 'byQuery')();
+    getPopular = async(page) => {
+        return this.getData(this._apiBasePopular, page)();
     }
 
-    getTopRated = async() => {
-        return this.getData(this._apiBaseTopRated, 'byQuery')();
+    getTopRated = async(page) => {
+        return this.getData(this._apiBaseTopRated, page)();
     }
 
-    getUpcoming = async() => {
-        return this.getData(this._apiBaseUpcoming, 'byQuery')();
+    getUpcoming = async(page) => {
+        return this.getData(this._apiBaseUpcoming, page)();
     }
 
-    getBySearch = (query) => {
-        return this.getData(this._apiBaseBySearch, 'bySearch', query)();
+    getBySearch = (page, query) => {
+        return this.getData(this._apiBaseBySearch, page, query)();
     }
 
     getMovieDetails = async(id) => {
@@ -43,12 +43,9 @@ export default class MdbService {
         return this._transformMovieDetails(res);
     }
 
-    _getQueryUrl = (base, queryType, page, query) => {
-        if (queryType === 'byBtn') {
-            return `${base}${this._apiKey}&query=${query}&page=${page}`
-        } else {
-            return `${base}${this._apiKey}&page=${page}`
-        }
+    _getQueryUrl = (base, page, query) => {
+        const url = `${base}${this._apiKey}&page=${page}`;
+        return !query ? url : `${url}&query=${query}`;
     }
 
     _transformMovie = (movie) => {

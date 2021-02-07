@@ -1,32 +1,9 @@
-const reducer = (state, action) => {
-    if(state === undefined) {
-        return {
-            films: [],
-            loading: true,
-            error: null
-        }
-    }
+import updateFilmList from './film-list';
 
-    switch (action.type) {
-        case 'FETCH_FILMS_REQUEST':
-            return {
-                films: [],
-                loading: true,
-                error: null
-            }
-        case 'FETCH_FILMS_SUCCESS':
-            return {
-                films: action.payload,
-                loading: false,
-                error: null
-            }
-        case 'FETCH_FILMS_FAILURE':
-            return {
-                films: [],
-                loading: false,
-                error: action.payload
-            }
-        default:
-            return state;
+const reducer = (state, action) => {
+    return {
+        filmList: updateFilmList(state, action)
     }
 }
+
+export default reducer;

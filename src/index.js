@@ -1,11 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+
 import App from './components/app';
 import ErrorBoundary from './components/error-boundary';
+import MdbServiceContext from './components/mdb-service-context';
+import MdbService from './services/mdb-service';
 
+import store from './store';
+
+const mdbService = new MdbService();
 
 ReactDOM.render(
-    <ErrorBoundary>
-        <App />
-    </ErrorBoundary>,
+    <Provider store={store}>
+        <ErrorBoundary>
+            <MdbServiceContext.Provider value={ mdbService }>
+                <App />
+            </MdbServiceContext.Provider>
+        </ErrorBoundary>
+    </Provider>,
     document.getElementById('root'));
+
