@@ -43,6 +43,12 @@ export const fetchFilmsBySearch = (filmService, dispatch) => (page, query) => {
     fetchFilms('getBySearch', filmService, page, dispatch, query)
 }
 
+export const updateSearchQuery = (dispatch) => (e) => {
+    dispatch({
+        type: 'UPDATE_SEARCH_QUERY',
+        payload: e.target.value
+    });
+}
 
 
 

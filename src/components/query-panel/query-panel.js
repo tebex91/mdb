@@ -10,7 +10,7 @@ import './query-panel.sass';
 
 
 const QueryPanel = ({ info, fetchPopularFilms, fetchTopRatedFilms, fetchUpcomingFilms }) => {
-    console.log(info);
+    //console.log(info);
     return (
         <div className="query-panel">
             <button onClick={ () => fetchPopularFilms(1) } className="query-btn">popular</button>
