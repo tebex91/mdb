@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchPopularFilms, fetchTopRatedFilms, fetchUpcomingFilms } from '../../actions';
+import { fetchFilms, updateChosenBtn } from '../../actions';
 import { withMdbService } from '../hoc';
 import { compose } from 'redux';
 
@@ -9,28 +9,34 @@ import { compose } from 'redux';
 import './query-panel.sass';
 
 
-const QueryPanel = ({ info, fetchPopularFilms, fetchTopRatedFilms, fetchUpcomingFilms }) => {
-    //console.log(info);
+const QueryPanel = ({ queryButtons, fetchFilms, updateChosenBtn }) => {
+    const buttons = queryButtons.map(({ name, func, isChosen }) => {
+        const clazz = isChosen ? 'query-btn chosen' : 'query-btn';
+        return <li key={ name }>
+            <button
+                onClick={ () => {
+                    updateChosenBtn(name);
+                    fetchFilms(func, 1)
+                }}
+                className={clazz}>
+                { name }</button>
+        </li>
+    })
     return (
-        <div className="query-panel">
-            <button onClick={ () => fetchPopularFilms(1) } className="query-btn">popular</button>
-            <button onClick={ () => fetchTopRatedFilms(1) } className="query-btn">top rated</button>
-            <button onClick={ () => fetchUpcomingFilms(1) } className="query-btn">upcoming</button>
-        </div>
+        <ul className="query-panel">
+            { buttons }
+        </ul>
     )
 }
 
-const mapStateToProps = ({ filmList }) => {
-    return {
-        info: filmList
-    }
+const mapStateToProps = ({ queryButtons }) => {
+    return { queryButtons }
 }
 
 const mapDispatchToProps = (dispatch, { mdbService }) => {
     return {
-        fetchPopularFilms: fetchPopularFilms(mdbService, dispatch),
-        fetchTopRatedFilms: fetchTopRatedFilms(mdbService, dispatch),
-        fetchUpcomingFilms: fetchUpcomingFilms(mdbService, dispatch)
+        fetchFilms: fetchFilms(mdbService, dispatch),
+        updateChosenBtn: updateChosenBtn(dispatch)
     }
 }
 

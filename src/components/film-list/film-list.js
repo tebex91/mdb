@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import FilmListItem from '../film-list-item';
 import { withMdbService } from '../hoc';
 import { compose } from '../../utils';
-import { fetchPopularFilms } from '../../actions';
+import { fetchFilms } from '../../actions';
 import Spinner from '../spinner';
 
 import './film-list.sass';
@@ -23,7 +23,11 @@ const FilmList = ({ films }) => {
 
 class FilmListContainer extends Component {
     componentDidMount() {
-        this.props.fetchPopularFilms(1); //вынести первую загрузку в панель
+        const { queryButtons } = this.props;
+        const chosenBtn = queryButtons.find(({ isChosen }) => isChosen === true);
+        const idx = queryButtons.indexOf(chosenBtn);
+        const func = queryButtons[idx].func
+        this.props.fetchFilms(func, 1);
     }
 
     render () {
@@ -34,16 +38,17 @@ class FilmListContainer extends Component {
     }
 }
 
-const mapStateToProps = ({ filmList: {films, loading} }) => {
+const mapStateToProps = ({ filmList: {films, loading}, queryButtons }) => {
     return {
         films,
-        loading
+        loading,
+        queryButtons
     }
 };
 
 const mapDispatchToProps = (dispatch, { mdbService }) => {
     return {
-        fetchPopularFilms: fetchPopularFilms(mdbService, dispatch)
+        fetchFilms: fetchFilms(mdbService, dispatch)
     }
 }
 
