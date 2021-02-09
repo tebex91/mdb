@@ -17,6 +17,7 @@ export default class MdbService {
 
     getData = (base, queryType, page, query) => async() => {
         const url = this._getQueryUrl(base, queryType, page, query);
+        console.log(url);
         const res = await this.getResource(url);
         return res.results.map(this._transformMovie);
     }

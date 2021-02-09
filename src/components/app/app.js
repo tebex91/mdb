@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Header from '../header';
 import QueryPanel from '../query-panel';
 import FilmList from '../film-list';
-import ItemDetails from '../item-details';
+import Row from '../row';
+//import ItemDetails from '../item-details';
 //import ErrorIndicator from '../error-indicator';
 //import Spinner from '../spinner';
 
@@ -13,14 +14,7 @@ export default class App extends Component {
         return (
             <div className="app-block">
                 <Header />
-                <main>
-                    <div className="main-page">
-                        <QueryPanel />
-                        <FilmList />
-                    </div>
-                    <ItemDetails />
-                </main>
-
+                <Row left={<QueryPanel />} right={<FilmList />} />
             </div>
         )
     }

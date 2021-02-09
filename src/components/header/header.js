@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchFilms, updateSearchQuery } from '../../actions';
+import { fetchFilms, updateSearchQuery, updateActiveBtn } from '../../actions';
 import { withMdbService } from '../hoc';
 import { compose } from '../../utils';
 
 import './header.sass';
 
-const Header = ({ searchQuery, fetchFilms, updateSearchQuery }) => {
+const Header = ({ searchButton, searchQuery, fetchFilms, updateSearchQuery, updateActiveBtn }) => {
+    const { name, func } = searchButton;
     return (
         <div className="header">
             <div className="logo">movieDB</div>
@@ -15,27 +16,34 @@ const Header = ({ searchQuery, fetchFilms, updateSearchQuery }) => {
                 <div className="favorite-link"><i className="fa fa-bookmark" aria-hidden="true" /></div>
                 <form onSubmit={ (e) => {
                     e.preventDefault();
-                    fetchFilms('getBySearch', 1, searchQuery)}}>
+                    updateActiveBtn(func);
+                    fetchFilms(func, 1, searchQuery)}}>
                     <input
                         type="text"
                         placeholder="enter movie title"
                         value={ searchQuery }
-                        onChange={ (e) => updateSearchQuery(e) } />
-                    <button type="submit">go!</button>
+                        onChange={(e) => {
+                            updateSearchQuery(e);
+                        }} />
+                    <button type="submit">{name}</button>
                 </form>
             </div>
         </div>
     )
 }
 
-const mapStateToProps = ({ searchQuery }) => {
-    return { searchQuery }
+const mapStateToProps = ({searchButton, searchQuery }) => {
+    return {
+        searchButton,
+        searchQuery
+    }
 }
 
 const mapDispatchToProps = (dispatch, { mdbService }) => {
     return {
         fetchFilms: fetchFilms(mdbService, dispatch),
-        updateSearchQuery: updateSearchQuery(dispatch)
+        updateSearchQuery: updateSearchQuery(dispatch),
+        updateActiveBtn: updateActiveBtn(dispatch)
     }
 }
 

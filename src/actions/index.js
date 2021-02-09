@@ -34,10 +34,24 @@ export const updateSearchQuery = (dispatch) => (e) => {
     });
 }
 
+//возможно рассмотреть совмещение updateChosenBtn и updateActiveBtn, но врядли, просто дать им нормальные имена
 export const updateChosenBtn = (dispatch) => (btnName) => {
     dispatch({
         type: 'UPDATE_CHOSEN_BTN',
         payload: btnName
+    })
+}
+
+export const updateActiveBtn = (dispatch) => (btnFunc) => {
+    dispatch({
+        type: 'UPDATE_ACTIVE_BTN',
+        payload: btnFunc
+    })
+}
+
+export const updatePageNumber = (dispatch) => (btnName) => {
+    dispatch({
+        type: 'UPDATE_PAGE_NUMBER'
     })
 }
 
