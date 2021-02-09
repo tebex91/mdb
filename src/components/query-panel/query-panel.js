@@ -1,50 +1,40 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+//import { connect } from 'react-redux';
 
-import { fetchFilms, updateChosenBtn, updateActiveBtn, updatePageNumber } from '../../actions';
-import { withMdbService } from '../hoc';
-import { compose } from 'redux';
-
+//import { updateChosenBtn } from '../../actions';
 
 import './query-panel.sass';
 
 
-const QueryPanel = ({ queryButtons, fetchFilms, updateChosenBtn, updateActiveBtn, updatePageNumber, pageNumber }) => {
-    const buttons = queryButtons.map(({ name, func, isChosen }) => {
-        const clazz = isChosen ? 'query-btn chosen' : 'query-btn';
-        return <li key={ name }>
-            <button
-                onClick={ () => {
-                    updatePageNumber()
-                    updateChosenBtn(name);
-                    updateActiveBtn(func);
-                    fetchFilms(func, pageNumber)
-                }}
-                className={clazz}>
-                { name }</button>
-        </li>
-    })
+const QueryPanel = () => {
     return (
-        <ul className="query-panel">
-            { buttons }
-        </ul>
+        <div className="query-panel">
+            <Link to='/popular'>
+                <button>popular</button>
+            </Link>
+            <Link to='/top_rated'>
+                <button>top rated</button>
+            </Link>
+            <Link to='/upcoming'>
+                <button>upcoming</button>
+            </Link>
+        </div>
     )
 }
 
-const mapStateToProps = ({ queryButtons, pageNumber }) => {
-    return { queryButtons, pageNumber }
+/*
+const mapStateToProps = ({ queryButtons }) => {
+    return { queryButtons }
 }
 
-const mapDispatchToProps = (dispatch, { mdbService }) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        fetchFilms: fetchFilms(mdbService, dispatch),
-        updateChosenBtn: updateChosenBtn(dispatch),
-        updateActiveBtn: updateActiveBtn(dispatch),
-        updatePageNumber: updatePageNumber(dispatch)
+        updateChosenBtn: updateChosenBtn(dispatch)
     }
 }
 
-export default compose(
-    withMdbService(),
-    connect(mapStateToProps, mapDispatchToProps)
-)(QueryPanel);
+export default connect(mapStateToProps, mapDispatchToProps)(QueryPanel);*/
+
+
+export default QueryPanel;

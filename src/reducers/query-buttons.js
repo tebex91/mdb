@@ -1,7 +1,7 @@
 const updateQueryButtons = (state, action) => {
     if(state === undefined) {
         return [
-            {name: 'popular', func: 'getPopular', isChosen: true},
+            {name: 'popular', func: 'getPopular', isChosen: false},
             {name: 'top rated', func: 'getTopRated', isChosen: false},
             {name: 'upcoming', func: 'getUpcoming', isChosen: false}
         ]
@@ -17,10 +17,6 @@ const updateQueryButtons = (state, action) => {
         const chosenItem = queryButtons.find(({ name }) => name === action.payload);
         const newIdx = queryButtons.indexOf(chosenItem);
         return updateButton(clearArr, newIdx);
-    }
-
-    if(action.payload === state.searchButton.func) {
-        return clearArr;
     }
 
     return queryButtons;
