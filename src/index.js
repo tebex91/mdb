@@ -23,4 +23,3 @@ ReactDOM.render(
         </ErrorBoundary>
     </Provider>,
     document.getElementById('root'));
-

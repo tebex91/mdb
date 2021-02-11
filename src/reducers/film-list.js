@@ -1,10 +1,13 @@
+//чисто
 const updateFilmList = (state, action) => {
+    const initialValue = {
+        films: [],
+        loading: true,
+        error: null
+    }
+
     if(state === undefined) {
-        return {
-            films: [],
-            loading: true,
-            error: null
-        }
+        return initialValue;
     }
 
     const { films } = state.filmList;
@@ -28,12 +31,8 @@ const updateFilmList = (state, action) => {
                 loading: false,
                 error: action.payload
             }
-        case 'CLEAR_FILMS':
-            return {
-                films: [],
-                loading: true,
-                error: null
-            };
+        case 'DELETE_FILMS':
+            return initialValue;
         default:
             return state.filmList;
     }

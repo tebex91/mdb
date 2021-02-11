@@ -1,40 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-//import { connect } from 'react-redux';
-
-//import { updateChosenBtn } from '../../actions';
+import { connect } from 'react-redux';
 
 import './query-panel.sass';
 
 
-const QueryPanel = () => {
+const QueryPanel = ({ queryButtons }) => {
+    const buttons = queryButtons.map(({ name, path, isChosen }) => {
+        const clazz = isChosen ? 'query-btn chosen' : 'query-btn';
+        return <li key={path}>
+            <Link to={path}>
+                <button className={clazz}>{name}</button>
+            </Link>
+        </li>
+    })
     return (
-        <div className="query-panel">
-            <Link to='/popular'>
-                <button>popular</button>
-            </Link>
-            <Link to='/top_rated'>
-                <button>top rated</button>
-            </Link>
-            <Link to='/upcoming'>
-                <button>upcoming</button>
-            </Link>
-        </div>
+        <ul className="query-panel">
+            {buttons}
+        </ul>
     )
 }
 
-/*
 const mapStateToProps = ({ queryButtons }) => {
     return { queryButtons }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        updateChosenBtn: updateChosenBtn(dispatch)
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(QueryPanel);*/
-
-
-export default QueryPanel;
+export default connect(mapStateToProps)(QueryPanel);

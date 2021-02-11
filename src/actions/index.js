@@ -1,49 +1,34 @@
-const filmsRequest = () => {
-    return {
-        type: 'FETCH_FILMS_REQUEST'
-    }
-}
+import {
+    fetchFilms,
+    deleteFilms
+} from './fetch-film-list';
 
-const filmsLoaded = (newFilms) => {
-    return {
-        type: 'FETCH_FILMS_SUCCESS',
-        payload: newFilms
-    }
-}
+import { fetchDetails } from './fetch-film-details';
 
-const filmsError = (error) => {
-    return {
-        type: 'FETCH_FILMS_FAILURE',
-        payload: error
-    }
-}
 
-export const fetchFilms = (filmService, dispatch) => (func, page, query) => {
-    dispatch(filmsRequest());
-    filmService[func](page, query)
-        .then(data => {
-            dispatch(filmsLoaded(data))
-        })
-        .catch((err) => dispatch(filmsError(err)));
-}
-
-export const updateSearchQuery = (dispatch) => (e) => {
+const updateCurrentPath = (dispatch) => (path) => {
     dispatch({
-        type: 'UPDATE_SEARCH_QUERY',
-        payload: e.target.value
-    });
-}
-
-export const updateChosenBtn = (dispatch) => (btnName) => {
-    dispatch({
-        type: 'UPDATE_CHOSEN_BTN',
-        payload: btnName
+        type: 'UPDATE_CURRENT_PATH',
+        payload: path
     })
 }
 
-export const clearFilms = (dispatch) => () => {
-    dispatch({type: 'CLEAR_FILMS'});
+const updateMarkedFilms = (dispatch) => (film) => {
+    dispatch({
+        type: 'UPDATE_MARKED_FILMS',
+        payload: film
+    })
 }
+
+export {
+    fetchFilms,
+    deleteFilms,
+    fetchDetails,
+    updateCurrentPath,
+    updateMarkedFilms
+}
+
+
 
 
 

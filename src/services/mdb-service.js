@@ -15,11 +15,36 @@ export default class MdbService {
         return await res.json();
     }
 
-    getData = (base, queryType, page, query) => async() => {
-        const url = this._getQueryUrl(base, queryType, page, query);
-        //console.log(url);
+    getData = (base, page, query) => async() => {
+        const url = this._getQueryUrl(base, page, query);
         const res = await this.getResource(url);
         return res.results.map(this._transformMovie);
+    }
+
+    getPages = async (apiBase, query) => {
+        const data = await this.getResource(
+            this._getQueryUrl(this._apiBaseBySearch,1, query));
+        return data.total_pages
+    }
+
+    getTotalPages = async () => {
+        const popular = await this.getResource(
+            this._getQueryUrl(this._apiBasePopular, 1));
+        const topRated = await this.getResource(
+            this._getQueryUrl(this._apiBaseTopRated, 1));
+        const upcoming = await this.getResource(
+            this._getQueryUrl(this._apiBaseUpcoming, 1));
+        return {
+            popular: popular.total_pages,
+            topRated: topRated.total_pages,
+            upcoming: upcoming.total_pages
+        }
+    }
+
+    getSearchTotalPages = async (query) => {
+        const data = await this.getResource(
+            this._getQueryUrl(this._apiBaseBySearch,1, query));
+        return data.total_pages
     }
 
     getPopular = async(page) => {

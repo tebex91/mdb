@@ -1,9 +1,9 @@
 const updateQueryButtons = (state, action) => {
     if(state === undefined) {
         return [
-            {name: 'popular', func: 'getPopular', isChosen: false},
-            {name: 'top rated', func: 'getTopRated', isChosen: false},
-            {name: 'upcoming', func: 'getUpcoming', isChosen: false}
+            {name: 'popular', path: '/popular', isChosen: false},
+            {name: 'top rated', path: '/top_rated', isChosen: false},
+            {name: 'upcoming', path: '/upcoming', isChosen: false}
         ]
     }
 
@@ -13,8 +13,8 @@ const updateQueryButtons = (state, action) => {
     const oldIdx = queryButtons.indexOf(oldItem);
     const clearArr = updateButton(queryButtons, oldIdx);
 
-    if(action.type === 'UPDATE_CHOSEN_BTN') {
-        const chosenItem = queryButtons.find(({ name }) => name === action.payload);
+    if(action.type === 'UPDATE_CURRENT_PATH') {
+        const chosenItem = queryButtons.find(({ path }) => path === action.payload);
         const newIdx = queryButtons.indexOf(chosenItem);
         return updateButton(clearArr, newIdx);
     }

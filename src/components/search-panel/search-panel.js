@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 
-const SearchPanel = () => {
+const SearchPanel = ({ history }) => {
     const [searchQuery, setSearchQuery] = useState('');
     return (
         <form onSubmit={ (e) => {
-            e.preventDefault()}}>
+            e.preventDefault();
+            const query = searchQuery.trim().replace(/ /g,"+");
+            history.push(`/search&q=${query}`);
+            setSearchQuery('')}}>
             <input
                 type="text"
-                placeholder="enter movie title"
+                placeholder="find movie"
                 value={ searchQuery }
                 onChange={(e) => {
                     setSearchQuery(e.target.value);
-                    console.log(searchQuery);
                 }} />
             <button type="submit">go!</button>
         </form>
     )
 }
 
-export default SearchPanel
+export default withRouter(SearchPanel);
