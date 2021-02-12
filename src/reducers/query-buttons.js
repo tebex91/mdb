@@ -2,7 +2,7 @@ const updateQueryButtons = (state, action) => {
     if(state === undefined) {
         return [
             {name: 'popular', path: '/popular', isChosen: false},
-            {name: 'top rated', path: '/top_rated', isChosen: false},
+            {name: 'top rated', path: '/top_rated', isChosen: true},
             {name: 'upcoming', path: '/upcoming', isChosen: false}
         ]
     }

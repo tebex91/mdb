@@ -5,6 +5,8 @@ import {
 
 import { fetchDetails } from './fetch-film-details';
 
+import { fetchTotalPages } from './fetch-total-pages';
+
 
 const updateCurrentPath = (dispatch) => (path) => {
     dispatch({
@@ -20,12 +22,28 @@ const updateMarkedFilms = (dispatch) => (film) => {
     })
 }
 
+const removeAllMarkedFilms = (dispatch) => () => {
+    dispatch({
+        type: 'REMOVE_ALL_MARKED_FILMS'
+    })
+}
+
+const removeMarkedFilm = (dispatch) => (id) => {
+    dispatch({
+        type: 'REMOVE_MARKED_FILM',
+        payload: id
+    })
+}
+
 export {
     fetchFilms,
     deleteFilms,
     fetchDetails,
+    fetchTotalPages,
     updateCurrentPath,
-    updateMarkedFilms
+    updateMarkedFilms,
+    removeAllMarkedFilms,
+    removeMarkedFilm
 }
 
 

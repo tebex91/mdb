@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
+import './search-panel.sass';
+
 const SearchPanel = ({ history }) => {
     const [searchQuery, setSearchQuery] = useState('');
     return (
-        <form onSubmit={ (e) => {
+        <form className="search-panel" onSubmit={ (e) => {
             e.preventDefault();
             const query = searchQuery.trim().replace(/ /g,"+");
+            if(!query) { return }
             history.push(`/search&q=${query}`);
             setSearchQuery('')}}>
             <input

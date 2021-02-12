@@ -3,7 +3,7 @@ import {Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Header from '../header';
-import { PopularPage, TopRatedPage, UpcomingPage, SearchPage } from '../mdb-pages';
+import { PopularPage, TopRatedPage, UpcomingPage, SearchPage, MarkedPage } from '../mdb-pages';
 import FilmDetails from '../film-details';
 import { compose } from '../../utils';
 import { updateCurrentPath } from '../../actions';
@@ -24,6 +24,7 @@ const App = ({ location, updateCurrentPath }) => {
                 <Route path='/popular' component={PopularPage} />
                 <Route path='/top_rated' component={TopRatedPage} />
                 <Route path='/upcoming' component={UpcomingPage} />
+                <Route path='/marked' component={MarkedPage} />
                 <Route path='/search&q=:id'
                        render={({match}) => {
                            const { id } = match.params;

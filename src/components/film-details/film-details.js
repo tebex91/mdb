@@ -3,19 +3,24 @@ import { connect } from 'react-redux';
 
 import { withMdbService } from '../hoc';
 import { compose } from '../../utils';
-import { fetchDetails } from '../../actions';
+import { fetchDetails, updateMarkedFilms } from '../../actions';
 import Spinner from '../spinner';
 
 import './film-details.sass';
 import defaultPoster from "../img/poster.jpg"
 
-const FilmDetails = ({ film }) => {
+const FilmDetails = ({ film, markedFilms, updateMarkedFilms }) => {
     const { id, title, tagline, revenue, budget, runtime, overview, rating,
         genres, year, productionCountries, poster } = film;
+    const elem = markedFilms.find((film) => film.id === id);
+    const clazz = 'favorite-label';
+    const markedClazz = elem ? ' marked' : '';
     return (
         <div className="item-details">
             <div>
-                <div className="favorite-label"><i className="fa fa-bookmark" aria-hidden="true" /></div>
+                <div className={clazz + markedClazz}
+                     onClick={() => updateMarkedFilms({id, title, rating})}>
+                    <i className="fa fa-bookmark" aria-hidden="true" /></div>
                 <div className="item-rating">{rating}</div>
                 <img className="item-poster" src={poster || defaultPoster} alt="poster"/>
                 <div className="item-info">
@@ -63,23 +68,25 @@ class FilmDetailsContainer extends Component {
     }
 
     render() {
-        const { loading, film } = this.props;
+        const { loading, ...props } = this.props;
         const spinner = <Spinner />; //лишнее обьявление
-        const filmDetails = <FilmDetails film={film} />
+        const filmDetails = <FilmDetails {...props} />
         return loading ? spinner : filmDetails;
     }
 }
 
-const mapStateToProps = ({ filmDetails: { loading, film} }) => {
+const mapStateToProps = ({ filmDetails: { loading, film}, markedFilms }) => {
     return {
         loading,
-        film
+        film,
+        markedFilms
     }
 }
 
 const mapDispatchToProps = (dispatch, { mdbService }) => {
     return {
-        fetchDetails: fetchDetails(mdbService, dispatch)
+        fetchDetails: fetchDetails(mdbService, dispatch),
+        updateMarkedFilms: updateMarkedFilms(dispatch)
     }
 }
 

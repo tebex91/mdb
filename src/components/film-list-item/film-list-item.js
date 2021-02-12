@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { updateMarkedFilms } from '../../actions';
+
 import './film-list-item.sass';
 import defaultPoster from '../img/poster.jpg'
-import { updateMarkedFilms } from '../../actions';
+
 
 const FilmListItem = ({ film, markedFilms, updateMarkedFilms }) => {
     const { id, title, rating, poster, release } = film;

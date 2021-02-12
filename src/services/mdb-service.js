@@ -21,13 +21,30 @@ export default class MdbService {
         return res.results.map(this._transformMovie);
     }
 
-    getPages = async (apiBase, query) => {
+    getTotalPages = async (func, query) => {
+        let apiBase;
+        switch(func) {
+            case('getPopular'):
+                apiBase = this._apiBasePopular;
+                break;
+            case('getTopRated'):
+                apiBase = this._apiBaseTopRated;
+                break;
+            case('getUpcoming'):
+                apiBase = this._apiBaseUpcoming;
+                break;
+            case('getBySearch'):
+                apiBase = this._apiBaseBySearch;
+                break;
+            default:
+                return new Error(`Impossible to determine the apiBase for fetching total pages`)
+        }
         const data = await this.getResource(
-            this._getQueryUrl(this._apiBaseBySearch,1, query));
+            this._getQueryUrl(apiBase,1, query));
         return data.total_pages
     }
 
-    getTotalPages = async () => {
+/*    getTotalPages = async () => {
         const popular = await this.getResource(
             this._getQueryUrl(this._apiBasePopular, 1));
         const topRated = await this.getResource(
@@ -45,7 +62,10 @@ export default class MdbService {
         const data = await this.getResource(
             this._getQueryUrl(this._apiBaseBySearch,1, query));
         return data.total_pages
-    }
+    }*/
+
+    /* !!! На названии функций getPopular, getTopRated, getUpcoming, getBySearch завязаны запросы в списках и поиске,
+    запросы сумарных страниц. В этих местах названия функций указаны строкой  */
 
     getPopular = async(page) => {
         return this.getData(this._apiBasePopular, page)();

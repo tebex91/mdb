@@ -9,9 +9,8 @@ const QueryPanel = ({ queryButtons }) => {
     const buttons = queryButtons.map(({ name, path, isChosen }) => {
         const clazz = isChosen ? 'query-btn chosen' : 'query-btn';
         return <li key={path}>
-            <Link to={path}>
-                <button className={clazz}>{name}</button>
-            </Link>
+            <Link className={clazz} to={path}>
+                {name}</Link>
         </li>
     })
     return (

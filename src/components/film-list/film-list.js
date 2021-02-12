@@ -5,13 +5,13 @@ import { withRouter } from 'react-router-dom';
 import FilmListItem from '../film-list-item';
 import { withMdbService } from '../hoc';
 import { compose } from '../../utils';
-import { fetchFilms, deleteFilms } from '../../actions';
+import { fetchFilms, fetchTotalPages, deleteFilms } from '../../actions';
 import Spinner from '../spinner';
 
 import './film-list.sass';
 
 
-const FilmList = ({ history, films, func, fetchFilms, pageNum, updatePageNum, searchQuery }) => {
+const FilmList = ({ history, films, func, fetchFilms, pageNum, updatePageNum, searchQuery, totalPages }) => {
     const items = films.map((film) => {
         const { id } = film;
         return <li key={ id }
@@ -23,15 +23,20 @@ const FilmList = ({ history, films, func, fetchFilms, pageNum, updatePageNum, se
             <FilmListItem film={film} /></li>
     })
 
+    const btn = (
+        <button className="show-more-btn"
+            onClick={() => {
+            fetchFilms(func, pageNum, searchQuery);
+            updatePageNum();
+        }}>More</button>
+    );
+
     return (
         <div className="film-list">
             <ul>
                 { items }
             </ul>
-            <button onClick={() => {
-                fetchFilms(func, pageNum, searchQuery);
-                updatePageNum();
-            }}>More</button>
+            { totalPages[func] >= pageNum && items.length > 0 ? btn : null }
         </div>
     )
 }
@@ -42,12 +47,20 @@ class FilmListContainer extends Component {
     }
 
     componentDidMount() {
-        const { func, fetchFilms, searchQuery} = this.props;
-        fetchFilms(func, this.state.pageNum, searchQuery);
-        this.updatePageNum();
+        this.updateFilms();
     }
 
-    componentWillUnmount() {
+    componentDidUpdate(prevProps) {
+        if (this.props.searchQuery !== prevProps.searchQuery) {
+            this.updateFilms();
+        }
+    }
+
+    updateFilms = () => {
+        const { func, fetchFilms, fetchTotalPages, searchQuery} = this.props;
+        fetchFilms(func, this.state.pageNum, searchQuery);
+        fetchTotalPages(func, searchQuery);
+        this.updatePageNum();
         this.props.deleteFilms();
     }
 
@@ -59,28 +72,37 @@ class FilmListContainer extends Component {
 
     render () {
         const { loading, films, ...props } = this.props;
-        const spinner = <Spinner />; //лишнее обьявление?
+        const spinner = loading ? <Spinner /> : null;
         const list = <FilmList {...props}
                                films={films}
                                pageNum={this.state.pageNum}
                                updatePageNum={this.updatePageNum} />;
 
-        return films.length === 0 ? spinner : list;
+        const message = list.props.films.length > 0 || spinner ?
+            null : <p className="message">Sorry can't fetch</p>;
+
+        return (
+            <>
+                { spinner }
+                { message }
+                { list }
+            </>
+        )
     }
 }
 
-
-
-const mapStateToProps = ({ filmList: {films, loading} }) => {
+const mapStateToProps = ({ filmList: {films, loading}, totalPages }) => {
     return {
         films,
-        loading
+        loading,
+        totalPages
     }
 };
 
 const mapDispatchToProps = (dispatch, { mdbService }) => {
     return {
         fetchFilms: fetchFilms(mdbService, dispatch),
+        fetchTotalPages: fetchTotalPages(mdbService, dispatch),
         deleteFilms: deleteFilms(dispatch)
     }
 }

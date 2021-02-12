@@ -1,5 +1,6 @@
 import React from 'react';
 import FilmList from '../film-list';
+import MarkedPage from './marked-page';
 
 const PopularPage = () => <FilmList func='getPopular' />;
 const TopRatedPage = () => <FilmList func='getTopRated' />;
@@ -10,5 +11,6 @@ export {
     PopularPage,
     TopRatedPage,
     UpcomingPage,
-    SearchPage
+    SearchPage,
+    MarkedPage
 }

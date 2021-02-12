@@ -28,7 +28,7 @@ const fetchFilms = (filmService, dispatch) => (func, page, query) => {
 }
 
 const deleteFilms = (dispatch) => () => {
-    dispatch({type: 'DELETE_FILMS'});
+    dispatch({type: 'DELETE_FILMS'}); // не понятно что конкретно удаляет этот фетч и почему он находится именно здесь
 }
 
 export {
