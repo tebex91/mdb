@@ -7,8 +7,6 @@ import { PopularPage, TopRatedPage, UpcomingPage, SearchPage, MarkedPage } from 
 import FilmDetails from '../film-details';
 import { compose } from '../../utils';
 import { updateCurrentPath } from '../../actions';
-//import ErrorIndicator from '../error-indicator';
-//import Spinner from '../spinner';
 
 import './app.sass';
 
@@ -35,6 +33,7 @@ const App = ({ location, updateCurrentPath }) => {
                            const { id } = match.params;
                            return <FilmDetails id={id} />
                        }} />
+                <Route render={() => <p className="message">page not found</p>} />
             </Switch>
         </div>
     )

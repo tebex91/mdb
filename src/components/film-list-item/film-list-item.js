@@ -10,13 +10,27 @@ import defaultPoster from '../img/poster.jpg'
 const FilmListItem = ({ film, markedFilms, updateMarkedFilms }) => {
     const { id, title, rating, poster, release } = film;
     const elem = markedFilms.find((film) => film.id === id);
-    const clazz = 'favorite-label';
-    const markedClazz = elem ? ' marked' : '';
+    const selectedClass = elem ? ' marked' : '';
+    let ratingClass;
+
+    if(rating === 'NR') {
+        ratingClass = ' gray';
+    } else if(rating < 5) {
+        ratingClass = ' red';
+    } else if(rating >= 5 && rating < 7) {
+        ratingClass = ' orange';
+    } else {
+        ratingClass = ' green';
+    }
+
     return (
         <div className="list-item">
-            <div className="rating"><span>{rating}</span></div>
-            <div className={clazz + markedClazz}
-                onClick={() => updateMarkedFilms({title, rating, id})}>
+            <div className={`rating${ratingClass}`}><span>{rating}</span></div>
+            <div className={`selected-label${selectedClass}`}
+                onClick={(e) => {
+                    e.preventDefault();
+                    updateMarkedFilms({title, rating, id})
+                }}>
                 <i className="fa fa-bookmark" aria-hidden="true" /></div>
             <img src={poster || defaultPoster} alt="poster" /> {/*возможно вынести определение пути постера в сервис*/}
             <div className="info">

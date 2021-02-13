@@ -16,11 +16,11 @@ const MarkedListItem = ({ history, film, removeMarkedFilm }) => {
                      history.push(`/movie_${id}`);
                  }
              }}>
-            <span className="rating">{rating}</span>
-            <span className="title">{title}</span>
-            <span className="trash"><i className="fa fa-trash-o"
+            <div className="rating">{rating}</div>
+            <div className="title">{title}</div>
+            <div className="trash"><i className="fa fa-trash-o"
                                        aria-hidden="true"
-                                       onClick={() => removeMarkedFilm(id)} /></span>
+                                       onClick={() => removeMarkedFilm(id)} /></div>
         </div>
     )
 }

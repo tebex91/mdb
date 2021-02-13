@@ -21,25 +21,35 @@
     top: 295px
     width: 40px
     height: 40px
-    border: 3px solid orange
+    border-width: 3px
+    border-style: solid
     border-radius: 50%
     background-color: #000
     color: #fff
-  .favorite-label
+    &.green
+      border-color: #70bd6d
+    &.orange
+      border-color: #edb34e
+    &.red
+      border-color: #f56c62
+    &.gray
+      border-color: #acadac
+  .selected-label
     position: absolute
     top: 10px
     right: 10px
     color: rgba(135, 135, 135, 0.6)
     font-size: 32px
     line-height: 32px
+    cursor: pointer
     &.marked
-      cursor: pointer
       color: rgba(230, 62, 21, 0.6)
   .info
     display: flex
     flex-direction: column
     padding: 25px 15px 15px
     .title
+      word-break: break-word
       font-size: 18px
       font-weight: bold
     .release

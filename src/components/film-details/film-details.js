@@ -16,16 +16,16 @@ const FilmDetails = ({ film, markedFilms, updateMarkedFilms }) => {
     const clazz = 'favorite-label';
     const markedClazz = elem ? ' marked' : '';
     return (
-        <div className="item-details">
+        <div className="film-details">
             <div>
                 <div className={clazz + markedClazz}
                      onClick={() => updateMarkedFilms({id, title, rating})}>
                     <i className="fa fa-bookmark" aria-hidden="true" /></div>
-                <div className="item-rating">{rating}</div>
-                <img className="item-poster" src={poster || defaultPoster} alt="poster"/>
-                <div className="item-info">
-                    <h1 className="item-title">{title}</h1>
-                    <div className="item-tagline">{tagline}</div>
+                <div className="film-rating">{rating}</div>
+                <img className="film-poster" src={poster || defaultPoster} alt="poster"/>
+                <div className="film-info">
+                    <h1 className="film-title">{title}</h1>
+                    <div className="film-tagline">{tagline}</div>
                     <table>
                         <tbody>
                         <tr>
@@ -42,19 +42,19 @@ const FilmDetails = ({ film, markedFilms, updateMarkedFilms }) => {
                         </tr>
                         <tr>
                             <td>budget</td>
-                            <td>${budget}</td>
+                            <td>{budget}</td>
                         </tr>
                         <tr>
                             <td>box office</td>
-                            <td>${revenue}</td>
+                            <td>{revenue}</td>
                         </tr>
                         <tr>
                             <td>runtime</td>
-                            <td>{runtime} minutes</td>
+                            <td>{runtime}</td>
                         </tr>
                         </tbody>
                     </table>
-                    <div className="item-overview">{overview}</div>
+                    <div className="film-overview">{overview}</div>
                 </div>
             </div>
         </div>

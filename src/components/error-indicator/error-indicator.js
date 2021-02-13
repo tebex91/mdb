@@ -5,10 +5,10 @@ import errorLogo from './error.png';
 
 const ErrorIndicator = () => {
     return (
-        <div>
+        <div className="error-message">
             <img src={errorLogo} alt="error"/>
-            <p>Oops!<br />
-               Something went wrong.</p>
+            <p>oops! something went wrong</p>
+            <p>please, try again late</p>
         </div>
     )
 }

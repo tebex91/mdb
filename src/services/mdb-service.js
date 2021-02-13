@@ -23,6 +23,7 @@ export default class MdbService {
 
     getTotalPages = async (func, query) => {
         let apiBase;
+
         switch(func) {
             case('getPopular'):
                 apiBase = this._apiBasePopular;
@@ -37,35 +38,17 @@ export default class MdbService {
                 apiBase = this._apiBaseBySearch;
                 break;
             default:
-                return new Error(`Impossible to determine the apiBase for fetching total pages`)
+                return new Error(`Impossible to determine the apiBase for fetching total pages`);
         }
+
         const data = await this.getResource(
             this._getQueryUrl(apiBase,1, query));
+
         return data.total_pages
     }
 
-/*    getTotalPages = async () => {
-        const popular = await this.getResource(
-            this._getQueryUrl(this._apiBasePopular, 1));
-        const topRated = await this.getResource(
-            this._getQueryUrl(this._apiBaseTopRated, 1));
-        const upcoming = await this.getResource(
-            this._getQueryUrl(this._apiBaseUpcoming, 1));
-        return {
-            popular: popular.total_pages,
-            topRated: topRated.total_pages,
-            upcoming: upcoming.total_pages
-        }
-    }
-
-    getSearchTotalPages = async (query) => {
-        const data = await this.getResource(
-            this._getQueryUrl(this._apiBaseBySearch,1, query));
-        return data.total_pages
-    }*/
-
-    /* !!! На названии функций getPopular, getTopRated, getUpcoming, getBySearch завязаны запросы в списках и поиске,
-    запросы сумарных страниц. В этих местах названия функций указаны строкой  */
+    /* На названии функций getPopular, getTopRated, getUpcoming, getBySearch завязаны запросы в списках и поиске,
+    запросы сумарных страниц. В этих местах названия функций указаны строкой */
 
     getPopular = async(page) => {
         return this.getData(this._apiBasePopular, page)();
@@ -99,41 +82,34 @@ export default class MdbService {
         return {
             id,
             title,
-            rating: vote_average,
+            rating: this._transformRating(vote_average),
             poster: this._transformPoster(poster_path),
-            release: this._checkData(release_date)
+            release: release_date ? this._transformDate(release_date) : 'unknown'
         }
     }
 
     _transformMovieDetails = (movie) => {
         const {id, title, tagline, revenue, budget, runtime, overview,
             vote_average, genres, release_date, production_countries, poster_path} = movie;
+
         return {
             id,
             title,
             tagline,
-            revenue,
-            budget,
-            runtime,
             overview,
-            rating: vote_average,
+            revenue: revenue ? `$${revenue}` : 'unknown',
+            budget: budget ? `$${budget}` : 'unknown',
+            runtime: runtime ? `${runtime} minutes` : 'unknown',
+            rating: this._transformRating(vote_average),
             genres: this._transformPropToString(genres).toLowerCase(),
-            year: release_date.substring(0, 4),
+            year: release_date.substring(0, 4) || 'unknown',
             productionCountries: this._transformPropToString(production_countries),
             poster: this._transformPoster(poster_path)
         }
-
     }
 
     _transformPoster = (poster) => {
         return poster ? this._imgBase + poster : poster;
-    }
-
-    _checkData = (data) => {
-        if(!data) {
-            return 'unknown'
-        }
-        return this._transformDate(data);
     }
 
     _transformDate = (date) => {
@@ -144,6 +120,19 @@ export default class MdbService {
     }
 
     _transformPropToString = (arr) => {
+        if(arr.length === 0) {
+            return 'unknown';
+        }
         return arr.map(({name}) => name).join(', ');
+    }
+
+    _transformRating = (rating) => {
+        if(!rating) {
+            return 'NR';
+        } else if(rating === Math.floor(rating)) {
+            return `${rating}.0`;
+        } else {
+            return rating;
+        }
     }
 }
