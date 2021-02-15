@@ -8,22 +8,25 @@ import SearchPanel from '../search-panel';
 import './header.sass';
 
 
-const Header = ({ markedFilms }) => {
-    const clazz = markedFilms.length > 0 ? 'favorite-mark fulfilled' : 'favorite-mark';
+const Header = ({ selectedFilms }) => {
+    const fulfilledClass = selectedFilms.length > 0 ? ' fulfilled' : '';
+
     return (
         <div className="header">
             <div className="logo">
-                <Link to='/top_rated' className="link" >movieDB</Link>
+                <Link to='/' className="link" >movieDB</Link>
             </div>
             <QueryPanel />
-            <Link to='/marked' className={clazz}><i className="fa fa-bookmark" aria-hidden="true" /></Link>
+            <Link to='/selected' className={`selected-label${fulfilledClass}`}>
+                <i className="fa fa-bookmark" aria-hidden="true" />
+            </Link>
             <SearchPanel />
         </div>
     )
 }
 
-const mapStateToProps = ({ markedFilms }) => {
-    return { markedFilms }
+const mapStateToProps = ({ selectedFilms }) => {
+    return { selectedFilms }
 }
 
 export default connect(mapStateToProps)(Header);

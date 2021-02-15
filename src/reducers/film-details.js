@@ -1,28 +1,26 @@
 const updateFilmDetails = (state, action) => {
+    const initialValue = {
+        film: null,
+        loading: true,
+        error: null
+    }
+
     if(state === undefined) {
-        return {
-            film: [],
-            loading: true,
-            error: null
-        }
+        return initialValue;
     }
 
     switch (action.type) {
         case 'FETCH_DETAILS_REQUEST':
-            return {
-                film: [],
-                loading: true,
-                error: null
-            }
+            return initialValue;
         case 'FETCH_DETAILS_SUCCESS':
             return {
                 film: action.payload,
                 loading: false,
                 error: null
             }
-        case 'FETCH_FILMS_FAILURE':
+        case 'FETCH_DETAILS_FAILURE':
             return {
-                film: [],
+                film: null,
                 loading: false,
                 error: action.payload
             }

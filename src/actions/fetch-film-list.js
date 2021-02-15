@@ -21,14 +21,13 @@ const filmsError = (error) => {
 const fetchFilms = (filmService, dispatch) => (func, page, query) => {
     dispatch(filmsRequest());
     filmService[func](page, query)
-        .then(data => {
-            dispatch(filmsLoaded(data))
-        })
+        .then(data => dispatch(filmsLoaded(data)))
         .catch((err) => dispatch(filmsError(err)));
 }
 
+//очистить список фильмов после размонтирования компонента и перед новым запросом поиска
 const deleteFilms = (dispatch) => () => {
-    dispatch({type: 'DELETE_FILMS'}); // не понятно что конкретно удаляет этот фетч и почему он находится именно здесь
+    dispatch({type: 'DELETE_FILMS'});
 }
 
 export {

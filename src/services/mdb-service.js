@@ -23,7 +23,6 @@ export default class MdbService {
 
     getTotalPages = async (func, query) => {
         let apiBase;
-
         switch(func) {
             case('getPopular'):
                 apiBase = this._apiBasePopular;
@@ -40,16 +39,17 @@ export default class MdbService {
             default:
                 return new Error(`Impossible to determine the apiBase for fetching total pages`);
         }
-
         const data = await this.getResource(
             this._getQueryUrl(apiBase,1, query));
 
         return data.total_pages
     }
 
-    /* На названии функций getPopular, getTopRated, getUpcoming, getBySearch завязаны запросы в списках и поиске,
-    запросы сумарных страниц. В этих местах названия функций указаны строкой */
-
+    /* Названия функций getPopular, getTopRated, getUpcoming, getBySearch указаны строкой в:
+        1) reducers/query-buttons.js
+        2) reducers/total-pages.js
+        3) mdb-pages/index.js
+    */
     getPopular = async(page) => {
         return this.getData(this._apiBasePopular, page)();
     }

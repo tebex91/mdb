@@ -16,7 +16,7 @@ const FilmList = ({ films, func, fetchFilms, pageNum,
         const { id } = film;
         return (
             <li key={ id }>
-                <Link to={`/movie_${id}`} className="link">
+                <Link to={`/movie/${id}`} className="link">
                     <FilmListItem film={film} />
                 </Link>
             </li>
@@ -28,7 +28,7 @@ const FilmList = ({ films, func, fetchFilms, pageNum,
             onClick={() => {
             fetchFilms(func, pageNum, searchQuery);
             updatePageNum();
-        }}>More</button>
+        }}>more</button>
     );
 
     return (
@@ -77,20 +77,20 @@ class FilmListContainer extends Component {
 
     render () {
         const { loading, films, ...props } = this.props;
-        const spinner = loading ? <Spinner /> : null;
         const list = <FilmList {...props}
                                films={films}
                                pageNum={this.state.pageNum}
                                updatePageNum={this.updatePageNum} />;
-
-        const message = list.props.films.length > 0 || spinner ?
-            null : <p className="message">no results for your query</p>;
-        //переделать. это пустые теги в браузере
+        const listIsEmpty = list.props.films.length === 0;
+        const spinner = loading && listIsEmpty ? <Spinner /> : null;
+        const message = listIsEmpty && !spinner ?
+                <p className="message">no results for your query</p> :
+                null;
         return (
             <>
-                { spinner }
-                { message }
-                { list }
+                {spinner}
+                {message}
+                {list}
             </>
         )
     }

@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { updateMarkedFilms } from '../../actions';
+import { updateSelectedFilms } from '../../actions';
 
 import './film-list-item.sass';
-import defaultPoster from '../img/poster.jpg'
+import defaultPoster from '../../common-styles/default-poster.jpg'
 
 
-const FilmListItem = ({ film, markedFilms, updateMarkedFilms }) => {
+const FilmListItem = ({ film, selectedFilms, updateSelectedFilms }) => {
     const { id, title, rating, poster, release } = film;
-    const elem = markedFilms.find((film) => film.id === id);
-    const selectedClass = elem ? ' marked' : '';
+    const elem = selectedFilms.find((film) => film.id === id);
+    const selectedClass = elem ? ' selected' : '';
     let ratingClass;
 
     if(rating === 'NR') {
@@ -29,7 +29,7 @@ const FilmListItem = ({ film, markedFilms, updateMarkedFilms }) => {
             <div className={`selected-label${selectedClass}`}
                 onClick={(e) => {
                     e.preventDefault();
-                    updateMarkedFilms({title, rating, id})
+                    updateSelectedFilms({title, rating, id})
                 }}>
                 <i className="fa fa-bookmark" aria-hidden="true" /></div>
             <img src={poster || defaultPoster} alt="poster" /> {/*возможно вынести определение пути постера в сервис*/}
@@ -41,13 +41,13 @@ const FilmListItem = ({ film, markedFilms, updateMarkedFilms }) => {
     )
 }
 
-const mapStateToProps = ({ markedFilms }) => {
-    return { markedFilms }
+const mapStateToProps = ({ selectedFilms }) => {
+    return { selectedFilms }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateMarkedFilms: updateMarkedFilms(dispatch)
+        updateSelectedFilms: updateSelectedFilms(dispatch)
     }
 }
 

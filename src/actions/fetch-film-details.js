@@ -21,9 +21,7 @@ const detailsError = (error) => {
 const fetchDetails = (filmService, dispatch) => (id) => {
     dispatch(detailsRequest());
     filmService.getMovieDetails(id)
-        .then(data => {
-            dispatch(detailsLoaded(data))
-        })
+        .then(data => dispatch(detailsLoaded(data)))
         .catch((err) => dispatch(detailsError(err)));
 }
 

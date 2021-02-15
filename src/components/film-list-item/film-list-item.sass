@@ -1,14 +1,16 @@
+@import "src/common-styles/styles"
+
 .list-item
-  align-self: stretch
   flex-shrink: 1
+  align-self: stretch
   display: flex
   flex-direction: column
   position: relative
   width: 210px
   height: 100%
   border-radius: 7px
-  background-color: #fff
-  color: #000
+  background-color: $white_color
+  color: $black_color
   img
     height: 315px
     border-radius: 7px 7px 0 0
@@ -17,15 +19,15 @@
     justify-content: center
     align-items: center
     position: absolute
-    left: 15px
     top: 295px
+    left: 15px
     width: 40px
     height: 40px
     border-width: 3px
     border-style: solid
     border-radius: 50%
-    background-color: #000
-    color: #fff
+    background-color: $black_color
+    color: $white_color
     &.green
       border-color: #70bd6d
     &.orange
@@ -35,14 +37,12 @@
     &.gray
       border-color: #acadac
   .selected-label
-    position: absolute
+    @include selected-label
     top: 10px
     right: 10px
-    color: rgba(135, 135, 135, 0.6)
     font-size: 32px
     line-height: 32px
-    cursor: pointer
-    &.marked
+    &.selected
       color: rgba(230, 62, 21, 0.6)
   .info
     display: flex
@@ -53,4 +53,4 @@
       font-size: 18px
       font-weight: bold
     .release
-      color: #838583
+      color: $gray_color

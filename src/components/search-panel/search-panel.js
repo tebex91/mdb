@@ -5,6 +5,7 @@ import './search-panel.sass';
 
 const SearchPanel = ({ history }) => {
     const [searchQuery, setSearchQuery] = useState('');
+
     return (
         <form className="search-panel" onSubmit={ (e) => {
             e.preventDefault();

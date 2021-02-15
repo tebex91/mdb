@@ -3,23 +3,23 @@ import { connect } from 'react-redux';
 
 import { withMdbService } from '../hoc';
 import { compose } from '../../utils';
-import { fetchDetails, updateMarkedFilms } from '../../actions';
+import { fetchDetails, updateSelectedFilms } from '../../actions';
 import Spinner from '../spinner';
 
 import './film-details.sass';
-import defaultPoster from "../img/poster.jpg"
+import defaultPoster from "../../common-styles/default-poster.jpg"
 
-const FilmDetails = ({ film, markedFilms, updateMarkedFilms }) => {
+const FilmDetails = ({ film, selectedFilms, updateSelectedFilms }) => {
     const { id, title, tagline, revenue, budget, runtime, overview, rating,
         genres, year, productionCountries, poster } = film;
-    const elem = markedFilms.find((film) => film.id === id);
-    const clazz = 'favorite-label';
-    const markedClazz = elem ? ' marked' : '';
+    const elem = selectedFilms.find((film) => film.id === id);
+    const clazz = 'selected-label';
+    const selectedClazz = elem ? ' selected' : '';
     return (
         <div className="film-details">
             <div>
-                <div className={clazz + markedClazz}
-                     onClick={() => updateMarkedFilms({id, title, rating})}>
+                <div className={clazz + selectedClazz}
+                     onClick={() => updateSelectedFilms({id, title, rating})}>
                     <i className="fa fa-bookmark" aria-hidden="true" /></div>
                 <div className="film-rating">{rating}</div>
                 <img className="film-poster" src={poster || defaultPoster} alt="poster"/>
@@ -68,25 +68,33 @@ class FilmDetailsContainer extends Component {
     }
 
     render() {
-        const { loading, ...props } = this.props;
-        const spinner = <Spinner />; //лишнее обьявление
-        const filmDetails = <FilmDetails {...props} />
-        return loading ? spinner : filmDetails;
+        const { loading, error, ...props } = this.props;
+        const spinner = loading ? <Spinner /> : null;
+        const errorMessage = error ? <p>page not found</p> : null;
+        const filmDetails = !loading && !error ? <FilmDetails {...props} /> : null;
+        return (
+            <>
+                {spinner}
+                {errorMessage}
+                {filmDetails}
+            </>
+        )
     }
 }
 
-const mapStateToProps = ({ filmDetails: { loading, film}, markedFilms }) => {
+const mapStateToProps = ({ filmDetails: { loading, error, film}, selectedFilms }) => {
     return {
         loading,
+        error,
         film,
-        markedFilms
+        selectedFilms
     }
 }
 
 const mapDispatchToProps = (dispatch, { mdbService }) => {
     return {
         fetchDetails: fetchDetails(mdbService, dispatch),
-        updateMarkedFilms: updateMarkedFilms(dispatch)
+        updateSelectedFilms: updateSelectedFilms(dispatch)
     }
 }
 

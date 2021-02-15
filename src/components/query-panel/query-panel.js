@@ -7,9 +7,9 @@ import './query-panel.sass';
 
 const QueryPanel = ({ queryButtons }) => {
     const buttons = queryButtons.map(({ name, path, isChosen }) => {
-        const clazz = isChosen ? 'query-btn chosen' : 'query-btn';
+        const chosenClass = isChosen ? ' chosen' : '';
         return <li key={path}>
-            <Link className={clazz} to={path}>
+            <Link to={path} className={`query-btn${chosenClass}`}>
                 {name}</Link>
         </li>
     })
